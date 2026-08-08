@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@import "@fontsource/itim";
+
+html {
+  background-color: rgb(14, 16, 28);
+  color: white;
+  font-family: "Itim", sans-serif;
+}
+
+.Navigation
+{
+  position: fixed;
+  bottom: 3%;
+  width: 90dvw;
+  height: 68px;
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color: #1c1d39;
+
+  .NavLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 68px;
+    aspect-ratio: 1;
+    border-radius: 10px;
+  }
+
+  .active {
+    background-color: grey;
+  }
+}
+
+.MobileTopBar
+{
+  background-color: #1c1d39;
+  width: 100%;
+  height: 80px;
+}
+
+.TitleImage
+{
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
