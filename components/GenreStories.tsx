@@ -1,5 +1,5 @@
 import { mockStories } from "../app/const/mock";
-import { Story } from "../components/index";
+import Story from "./Story";
 
 const GenreStories = ({id, genreName}:GenreStoriesProps) => {
   return (

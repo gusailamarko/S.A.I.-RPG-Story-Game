@@ -1,5 +1,5 @@
 import { mockGenres } from "../app/const/mock";
-import { GenreStories} from "../components/index";
+import GenreStories from "./GenreStories";
 
 const AllStories = () => {
   return (
