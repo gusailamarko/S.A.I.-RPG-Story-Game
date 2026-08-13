@@ -4,7 +4,7 @@ import MobileTopBar from "../../components/MobileTopBar"
 
 const creation = () => {
   return (
-    <main className="flex flex-col items-center">
+    <main className="flex flex-col items-center pb-[110px]">
       <MobileTopBar />
       <CreateForm />
       <MobileNav />

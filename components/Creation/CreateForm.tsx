@@ -21,7 +21,7 @@ const CreateForm = () => {
   }
 
   return (
-    <div className="w-[90dvw] pb-[120px]">
+    <div className="w-[90dvw]">
         <Form className="flex flex-col items-center gap-[1.5rem] mt-[2rem]">
             <div className="flex flex-col items-center">
                     <h2 className="text-[20px] tracking-[5%]">CREATE A STORY</h2>
