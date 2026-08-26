@@ -1,0 +1,274 @@
+@import "tailwindcss";
+@import "@fontsource/itim";
+
+/*!VARIABLES*/
+:root {
+  --primary-color: #1c1d39;
+  --bg-color: rgb(14, 16, 28);
+  --backexit-bgcolor: #762323;
+  --playbtn-bgcolor: #1a167e;
+  --highlight-color: #ffa000;
+}
+
+/*!OVERALL*/
+html {
+  background-color: var(--bg-color);
+  color: white;
+  font-family: "Itim", sans-serif;
+  min-height: 100dvh;
+}
+
+/*!LOGIN PAGE*/
+.InitialPage {
+  background-image: url('assets/loginBg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.AuthForm {
+  background-color: var(--primary-color);
+  padding: 1rem;
+  border: 3px solid var(--highlight-color);
+  border-radius: 10px;
+  gap: 1rem;
+}
+
+/*!NAVIGATION COMPONENTS*/
+/*Mobile Nav*/
+.Navigation {
+  position: fixed;
+  bottom: 3%;
+  width: 90dvw;
+  height: 68px;
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color: var(--primary-color);
+
+  .NavLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+    aspect-ratio: 1;
+    border-radius: 10px;
+  }
+
+  .active {
+    background-color: var(--highlight-color);
+    color: black;
+  }
+}
+
+/*Desktop/Dashboard Nav*/
+.DashboardNav {
+  background-color: var(--primary-color);
+  gap: 1rem;
+
+  .DashboardNavLink {
+    padding: 0.5rem;
+    border: 1px solid rgb(203, 213, 225);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .active {
+    background-color: var(--highlight-color);
+    color: black;
+  }
+}
+
+/*!MOBILE TOP BAR COMPONENT*/
+.MobileTopBar {
+  background-color: var(--primary-color);
+  width: 100%;
+  height: 80px;
+}
+
+/*!HOME PAGE*/
+.StoryInfo {
+  width: 120px;
+}
+
+.TitleImage {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .StoryInfo {
+    width: 140px;
+  }
+
+  .TitleImage {
+    width: 140px;
+    height: 180px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .StoryInfo {
+    width: 190px;
+  }
+
+  .TitleImage {
+    width: 190px;
+    height: 300px;
+  }
+}
+
+/*!CREATE PAGE*/
+.TextlessNav {
+  width: calc(90dvw/2 - 1rem);
+  height: 0.5rem;
+  background-color: var(--primary-color);
+  border-radius: 10px;
+}
+
+@media (min-width: 768px) {
+  .TextlessNav {
+    width: calc(50dvw/2 - 1rem);
+  }
+}
+
+.ActiveTextlessNav {
+  background-color: var(--highlight-color);
+}
+
+/*!PROFILE PAGE, ELEMENTS*/
+.ProfileBanner {
+  height: 200px;
+  width: 100dvw;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.ProfilePfp {
+  border: 3px solid var(--highlight-color);
+  border-radius: 50%;
+  width: 100px;
+  aspect-ratio: 1;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .ProfileBanner {
+    height: 250px;
+    width: 100%;
+  }
+
+  .ProfilePfp {
+    width: 150px;
+  }
+}
+
+.DashboardProfilePfp {
+  border: 3px solid var(--highlight-color);
+  border-radius: 50%;
+  width: 60px;
+  aspect-ratio: 1;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+/*!SETTINGS PAGE*/
+.SettingCard {
+  background-color: var(--primary-color);
+  border: 1px solid rgb(203, 213, 225);
+  border-radius: 10px;
+}
+
+/*!FORM ELEMENTS*/
+.FormElement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  label, input, select, textarea {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    label, input, select, textarea {
+      width: 80%;
+    }
+  }
+
+  input, select, textarea {
+    border-radius: 10px;
+    border: 1px solid rgb(203, 213, 225);
+    background-color: var(--primary-color);
+    padding: 0.3rem;
+    font-size: 16px;
+  }
+
+  input, textarea {
+    color: rgb(227, 234, 242);
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border: 1px solid var(--highlight-color);
+    outline: none; /*Overrides the browser's default focused visuals*/
+  }
+
+  label {
+    font-size: 18px;
+  }
+
+  .UploadFileBtn {
+    background-color: var(--primary-color);
+    border: 1px solid rgb(203, 213, 225);
+    border-radius: 10px;
+  }
+
+  .RemoveFileBtn {
+    background-color: var(--primary-color);
+  }
+
+  .Required {
+    color: var(--highlight-color);
+  }
+}
+
+/*!BUTTONS*/
+.FormPageChanger {
+  background-color: var(--playbtn-bgcolor);
+  border: 1px solid rgb(203, 213, 225);
+  border-radius: 10px;
+}
+
+.MainActionBtn {
+  background-color: var(--highlight-color);
+  border: 1px solid rgb(203, 213, 225);
+  border-radius: 10px;
+  color: black
+}
+
+.DeleteBtn {
+  background-color: red;
+  border-radius: 10px;
+}
