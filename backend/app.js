@@ -1,8 +1,15 @@
-const express = require('express');
-const app = express();
-const path = require('path');
+import dotenv from 'dotenv';
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const PORT = 3000; //.env later
+//Setting up path, and the dotenv injection
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, './.env') });
+
+const app = express();
+const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
