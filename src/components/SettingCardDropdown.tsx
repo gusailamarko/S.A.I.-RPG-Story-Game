@@ -1,3 +1,4 @@
+import type { SettingCardDropdownProps } from "../types"
 import Button from "./Button"
 
 const SettingCardDropdown = ({variant}: SettingCardDropdownProps) => (

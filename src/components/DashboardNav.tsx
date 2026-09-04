@@ -33,7 +33,7 @@ const DashboardNav = () => {
             </NavLink>
             <div className="flex items-center gap-[0.5rem] absolute bottom-[2rem] left-[2rem] right-[2rem]">
                 <div className="hidden lg:block DashboardProfilePfp">
-                    <img src="defaultFallbacks/defaultProfilePfp.jpg" alt="User's profile picture" />
+                    <img src="defaultFallbacks/defaultProfilePfp.webp" alt="User's profile picture" />
                 </div>
                 <div>
                     <div className="w-[120px]">

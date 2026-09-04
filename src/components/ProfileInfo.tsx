@@ -4,11 +4,11 @@ const ProfileInfo = () => {
   return (
     <div className="flex flex-col flex-1 items-center md:h-[100dvh] overflow-y-auto">
         <div className="ProfileBanner">
-            <img src="defaultFallbacks/defaultProfileBg.jpg" alt="User's banner image" />
+            <img src="defaultFallbacks/defaultProfileBg.webp" alt="User's banner image" />
         </div>
         <div className="flex flex-col items-start md:items-center w-[90dvw] md:w-[70dvw] xl:w-[80dvw] mt-[-50px] md:mt-[-100px] gap-[0.25rem] md:p-[2rem]">
             <div className="ProfilePfp">
-                <img src="defaultFallbacks/defaultProfilePfp.jpg" alt="User's profile picture" />
+                <img src="defaultFallbacks/defaultProfilePfp.webp" alt="User's profile picture" />
             </div>
             <div>
                 <p className="text-[20px] font-bold tracking-[5%]">Displayname</p>
@@ -36,7 +36,6 @@ const ProfileInfo = () => {
             {/* Egyenlőre statikusan egy középre helyetett content, de majd ez a story számtól függően dinamikus content lesz itt */}
             <div className="flex flex-col flex-1 items-center justify-center gap-[0.5rem] w-full">
                 <p className="text-[18px]">No stories yet</p>
-                {/*<button type="button" className="bg-[#ffa000] text-black text-[14px] p-[0.5rem] rounded-[10px] border-1 border-slate-300">+ CREATE STORY</button>*/}
                 <Button type="button" usage="MainActionBtn" label="+ CREATE STORY" />
             </div>
         </div>

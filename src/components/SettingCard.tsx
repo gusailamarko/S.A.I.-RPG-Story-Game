@@ -1,5 +1,6 @@
 import { useState } from "react"
 import SettingCardDropdown from "./SettingCardDropdown";
+import type { SettingCardProps } from "../types";
 
 const SettingCard = ({label}:SettingCardProps) => {
   const [open, setOpen] = useState(false);

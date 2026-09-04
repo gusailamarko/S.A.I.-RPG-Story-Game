@@ -1,4 +1,12 @@
-const Story = ({ storyID, genreID, storyName, titleImg, author }: StoryProps) => {
+interface StoryProps {
+    storyID: number,
+    genreID: number,
+    author: string,
+    storyName: string,
+    titleImg: string,
+};
+
+const Story = ({ storyID, genreID, author, storyName, titleImg }: StoryProps) => {
   return (
     <div className="flex flex-col gap-[0.5rem]">
         <div className="TitleImage xl:w-[20rem]">

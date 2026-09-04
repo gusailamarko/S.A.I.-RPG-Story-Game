@@ -21,20 +21,20 @@ const CreateForm = () => {
   }
 
   return (
-    <div className="w-[90dvw] md:w-[70dvw] xl:w-[80dvw] md:h-[100dvh] overflow-y-auto md:p-[2rem]">
-        <form className="flex flex-col items-center gap-[1.5rem] mt-[2rem]">
-            <div className="flex flex-col items-center">
-                    <h2 className="text-[1.5rem] tracking-[5%]">CREATE A STORY</h2>
-                </div>
-            <div className="flex gap-[1rem]">
-                <span className={step === 1 ? "ActiveTextlessNav TextlessNav" : "TextlessNav"}></span>
-                <span className={step === 2 ? "ActiveTextlessNav TextlessNav" : "TextlessNav"}></span>
+    <div className="flex justify-center w-[90dvw] md:h-[100dvh] overflow-y-auto md:p-[2rem]">
+        <form className="flex flex-col items-center justify-center gap-[1.5rem] w-full md:w-[80%] h-full">
+            <div className="flex flex-col items-center w-full md:w-[80%]">
+                <h2 className="text-[1.5rem] tracking-[5%]">CREATE A STORY</h2>
             </div>
-            <div className={step !== 1 ? "hidden" : "flex flex-col items-center gap-[1rem] w-[90dvw] md:w-[70dvw] xl:w-[80dvw]"}>
-                <div className="FormElement w-[90dvw] md:w-[70dvw] xl:w-[80dvw]">
+            <div className="flex items-center justify-between w-full md:w-[80%]">
+                <div className={step === 1 ? "ActiveTextlessNav TextlessNav w-[49%]" : "TextlessNav w-[49%]"}></div>
+                <div className={step === 2 ? "ActiveTextlessNav TextlessNav w-[49%]" : "TextlessNav w-[49%]"}></div>
+            </div>
+            <div className={step !== 1 ? "hidden" : "flex flex-col items-center gap-[1rem] w-full md:w-[80%]"}>
+                <div className="w-full FormElement">
                     <label htmlFor="titleImg">Upload a title image:<span className="Required">*</span></label>
                     <input type="file" name="titleImg" id="titleImg" className="hidden" accept="image/*" onChange={handleFileChange} ref={fileInputRef} />
-                    <div className="flex justify-start md:justify-center items-center w-[90dvw] md:w-[70dvw] xl:w-[80dvw]">
+                    <div className="flex justify-center items-center">
                         {!titleImage ? (
                             <span className="py-[0.5rem] px-[1rem] UploadFileBtn" onClick={() => fileInputRef.current?.click()}>+ Choose an image</span>
                         ) : (
@@ -47,13 +47,13 @@ const CreateForm = () => {
                                 </span>                                
                             </div>                        
                         )}
-                    </div>
+                    </div>              
                 </div>
-                <div className="FormElement w-[90dvw] md:w-[70dvw] xl:w-[80dvw]">
+                <div className="w-full FormElement">
                     <label htmlFor="storyName">Story's name:<span className="Required">*</span></label>
                     <input type="text" name="storyName" id="storyName" placeholder="Name of the story" />
                 </div>
-                <div className="FormElement w-[90dvw] md:w-[70dvw] xl:w-[80dvw]">
+                <div className="w-full FormElement">
                     <label htmlFor="genre">Genre:<span className="Required">*</span></label>
                     <select name="genre" id="genre">
                         {mockGenres.map((genre) => (
@@ -61,23 +61,23 @@ const CreateForm = () => {
                         ))}
                     </select>
                 </div>
-                <div className="FormElement w-[90dvw] md:w-[70dvw] xl:w-[80dvw]">
+                <div className="w-full FormElement">
                     <label htmlFor="storyDesc">Brief description:<span className="Required">*</span></label>
                     <textarea name="storyDesc" id="storyDesc" placeholder="Short description describing the story" />
                 </div>
             </div>
-            <div className={step !== 2 ? "hidden" : "flex flex-col items-center gap-[1rem]"}>
-                <div className="FormElement w-[90dvw] md:w-[70dvw] xl:w-[80dvw]">
+            <div className={step !== 2 ? "hidden" : "flex flex-col items-center gap-[1rem] w-full md:w-[80%]"}>
+                <div className="w-full FormElement">
                     <label htmlFor="storyIntro">AI's intro message:<span className="Required">*</span></label>
-                    <textarea name="storyIntro" id="storyIntro" placeholder="The very first AI generated message you will see when starting the story" />
+                    <textarea rows={2} name="storyIntro" id="storyIntro" placeholder="The very first AI generated message you will see when starting the story" />
                 </div>
-                <div className="FormElement w-[90dvw] md:w-[70dvw] xl:w-[80dvw]">
+                <div className="w-full FormElement">
                     <label htmlFor="storyStats">Stats appearing on every response:</label>
-                    <textarea name="storyStats" id="storyStats" placeholder="Recurring elements like: relationships with certain characters, hp, etc."/>
+                    <textarea rows={2} name="storyStats" id="storyStats" placeholder="Recurring elements like: relationships with certain characters, hp, etc."/>
                 </div>
-                <div className="FormElement w-[90dvw] md:w-[70dvw] xl:w-[80dvw]">
+                <div className="w-full FormElement">
                     <label htmlFor="storyGoal">When should the story end?<span className="Required">*</span></label>
-                    <textarea name="storyGoal" id="storyGoal" placeholder="An event that triggers the AI's final response regarding this story"/>
+                    <textarea rows={2} name="storyGoal" id="storyGoal" placeholder="An event that triggers the AI's final response regarding this story"/>
                 </div>
             </div>
             <div className="flex justiy-center items-center gap-[1rem]">

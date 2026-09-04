@@ -9,6 +9,8 @@ CREATE TABLE users (
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role user_role NOT NULL DEFAULT 'user',
+    pfp TEXT DEFAULT 'defaultFallbacks/defaultProfilePfp.webp',
+    banner TEXT DEFAULT 'defaultFallbacks/defaultProfileBg.webp',
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -24,6 +26,13 @@ CREATE TABLE stories (
     genreID INT NOT NULL REFERENCES genres(genreID),
     authorID INT NOT NULL REFERENCES users(userID),
     storyName VARCHAR(100) NOT NULL,
-    titleImg TEXT,
+    titleImg TEXT NOT NULL,
+    storyDesc TEXT NOT NULL,
+    intro TEXT NOT NULL,
+    storyObj TEXT NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Playthroughs table:
+
+-- Story messages table:
