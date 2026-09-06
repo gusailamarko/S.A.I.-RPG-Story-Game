@@ -1,8 +1,11 @@
-import dotenv from 'dotenv';
 import express from 'express';
+import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import cors from 'cors';
+import session from 'express-session'
+import pgSession from 'connect-pg-simple'
+import { pool } from './db/pool.js';
 
 //Setting up path, and the dotenv injection
 const __filename = fileURLToPath(import.meta.url);
@@ -13,12 +16,32 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: process.env.CLIENT_URL,
   credentials: true
 }));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, '../public')));
+
+//Session
+const PgSession = pgSession(session);
+
+app.use(session({
+    store: new PgSession({
+        pool: pool,
+        tableName: 'session',
+        createTableIfMissing: true,
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24, //Milliseconds | Seconds | Minutes | Hours -> 1000*60*60*24 -> 24 hours (1 day)
+        httpOnly: true,   //JS can't read this cookie — mitigates XSS stealing it
+        secure: false,    //Set true once you're on HTTPS in production
+        sameSite: 'lax',  //Reasonable default; may need 'none' + secure:true for cross-site setups
+    }
+}));
 
 //Routers
 import authRoutes from './routes/authRoutes.js';

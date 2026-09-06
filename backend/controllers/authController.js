@@ -11,8 +11,10 @@ export async function login(req, res, next) {
 
         const match = await bcrypt.compare(password, user.password);
         if(!match) throw new CustomError("Incorrect password!", 401);
+
+        req.session.user = {userID: user.userid};
         
-        const { password: _, ...safeUser } = user; // strip password before sending
+        const { password: _, ...safeUser } = user; //Strip password before sending -> not shown/sent anywhere
         res.status(200).json(safeUser);
     }
     catch (e) {
@@ -33,6 +35,8 @@ export async function register(req, res, next) {
 
         const hashedPw = await bcrypt.hash(password, 12);
         const newUser = await registerNewUser(username, email.toLowerCase(), hashedPw);
+
+        req.session.user = {userID: newUser.userid};
 
         res.status(201).json(newUser);
     }
