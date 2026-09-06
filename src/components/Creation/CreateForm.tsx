@@ -1,8 +1,41 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../Button";
-import { mockGenres } from "../../const/const";
+
+interface Genres {
+    genreid: number,
+    genrename: string
+}
 
 const CreateForm = () => {
+  const [genres, setGenres] = useState<Genres[]>([]);
+  const [loading, isLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchGenres = async () => {
+        try {
+            isLoading(true);
+            const genres = await fetch("/api/genres/all");
+
+            if(!genres.ok) {
+                const errorData = await genres.json().catch(() => null);
+                setError(errorData?.message || "Failed to fetch genres, try again later!");
+            }
+
+            const data: Genres[] = await genres.json();
+            setGenres(data);
+        }
+        catch (error) {
+            setError("Something went wrong, try again later!");
+        }
+        finally {
+            isLoading(false);
+        }
+    }
+
+    fetchGenres();
+  }, []);
+
   //Helps handling the in-form page changes
   const [step, setStep] = useState(1);
 
@@ -20,9 +53,77 @@ const CreateForm = () => {
     if(fileInputRef.current) fileInputRef.current.value = "";
   }
 
+  const handleFormPageChange = () => {
+    const formData = new FormData(document.querySelector("form") as HTMLFormElement);
+    const storyName = formData.get("storyName") as string;
+    const genre = formData.get("genre") as string;
+    const storyDesc = formData.get("storyDesc") as string;
+
+    if(!titleImage || !storyName || !genre || !storyDesc) {
+        //showFeedback()
+        return console.log("Please fill in all required fields!");
+    }
+
+    setStep(2);
+  }
+
+  const handleCreateStory = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    /*const titleImg = formData.get("titleImg") as File | null;
+    const storyName = formData.get("storyName") as string;
+    const genre = formData.get("genre") as string;
+    const storyDesc = formData.get("storyDesc") as string;*/
+    const storyIntro = formData.get("storyIntro") as string;
+    //const storyStats = formData.get("storyStats") as string;
+    const storyGoal = formData.get("storyGoal") as string;
+
+    if(!storyIntro || !storyGoal) {
+        //showFeedback()
+        return console.log("Please fill in all required fields!");
+    }
+
+    if(titleImage) {
+        formData.set("titleImg", titleImage);
+    }
+
+    try {
+        isLoading(true);
+
+        const payload = new FormData(e.currentTarget);
+        if (titleImage) {
+            payload.set("titleImg", titleImage);
+        }
+
+        const request = await fetch("/api/stories/create", {
+            method: 'POST',
+            credentials: 'include',
+            body: formData
+        });
+
+        if(!request.ok) {
+            const errorData = await request.json().catch(() => null);
+            setError(errorData?.message || "Story creation unsuccessful, try again later!");
+        }
+        else
+        {
+            const requestData = await request.json();
+            //showFeedback
+            //page reload via useNavigate() -> const navigate = useNavigate() -> navigate('/create')
+        }
+    }
+    catch(error) {
+        setError("Something went wrong, try again later!");
+    }
+    finally {
+        isLoading(false);
+    }
+  }
+
   return (
     <div className="flex justify-center w-[90dvw] md:h-[100dvh] overflow-y-auto md:p-[2rem]">
-        <form className="flex flex-col items-center justify-center gap-[1.5rem] w-full md:w-[80%] h-full">
+        <form onSubmit={handleCreateStory} className="flex flex-col items-center justify-center gap-[1.5rem] w-full md:w-[80%] h-full">
             <div className="flex flex-col items-center w-full md:w-[80%]">
                 <h2 className="text-[1.5rem] tracking-[5%]">CREATE A STORY</h2>
             </div>
@@ -56,8 +157,8 @@ const CreateForm = () => {
                 <div className="w-full FormElement">
                     <label htmlFor="genre">Genre:<span className="Required">*</span></label>
                     <select name="genre" id="genre">
-                        {mockGenres.map((genre) => (
-                            <option key={genre.id} value={genre.id}>{genre.genreName}</option>
+                        {genres.map((genre) => (
+                            <option key={genre.genreid} value={genre.genreid}>{genre.genrename}</option>
                         ))}
                     </select>
                 </div>
@@ -82,13 +183,13 @@ const CreateForm = () => {
             </div>
             <div className="flex justiy-center items-center gap-[1rem]">
                 {step === 1 && (
-                    <Button type="button" usage="MainActionBtn" label="NEXT" onClick={() => setStep(2)}/>
+                    <Button type="button" usage="MainActionBtn" label="NEXT" onClick={handleFormPageChange}/>
                 )}
 
                 {step === 2 && (
                     <>
                         <Button type="button" usage="FormPageChanger" label="BACK" onClick={() => setStep(1)}/>
-                        <Button type="button" usage="MainActionBtn" label="CREATE" />
+                        <Button type="submit" usage="MainActionBtn" label="CREATE"/>
                     </>
                 )}
             </div>
