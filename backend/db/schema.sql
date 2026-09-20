@@ -11,7 +11,7 @@ CREATE TABLE users (
     role user_role NOT NULL DEFAULT 'user',
     pfp TEXT DEFAULT 'defaultFallbacks/defaultProfilePfp.webp',
     banner TEXT DEFAULT 'defaultFallbacks/defaultProfileBg.webp',
-    --credits INT NOT NULL DEFAULT 0,
+    credits INT NOT NULL DEFAULT 0,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -39,3 +39,9 @@ CREATE TABLE stories (
 -- Story messages table:
 
 -- Following table:
+CREATE TABLE follows (
+    followerID INT NOT NULL REFERENCES users(userID) ON DELETE CASCADE,
+    followingID INT NOT NULL REFERENCES users(userID) ON DELETE CASCADE,
+    createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (followerID, followingID)
+);

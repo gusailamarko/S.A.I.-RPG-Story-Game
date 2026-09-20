@@ -50,6 +50,8 @@ import genresRoutes from './routes/genresRoutes.js';
 app.use('/api/genres', genresRoutes);
 import storiesRoutes from './routes/storiesRoutes.js';
 app.use('/api/stories', storiesRoutes);
+import userRoutes from './routes/userRoutes.js';
+app.use('/api/user', userRoutes);
 
 //Error handling
 import { errorHandler } from './middleware/error_handler.js';

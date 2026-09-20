@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Button from "../Button"
 import { useNavigate } from "react-router-dom";
-import Feedback from "../Feedback";
+import { useAuth } from "../../context/AuthContext";
+import { useFeedback } from "../../context/Feedback";
 
 interface RegisterFormProps {
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -9,18 +10,11 @@ interface RegisterFormProps {
 
 const RegisterForm = ({onClick}:RegisterFormProps) => {
   const navigate = useNavigate();
+  const {login} = useAuth();
+  const {showFeedback} = useFeedback();
+
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const [passwordAgainVisibility, setPasswordAgainVisibility] = useState(false);
-  const [feedbackType, setFeedbackType] = useState<"success" | "error">("error");
-  const [feedbackMsg, setFeedbackMsg] = useState("");
-  const [usePopUp, setUsePopUp] = useState(false);
-
-  const showFeedback = (type: "success" | "error", msg: string, duration = 3000) => {
-    setFeedbackType(type);
-    setFeedbackMsg(msg);
-    setUsePopUp(true);
-    setTimeout(() => setUsePopUp(false), duration);
-  }
 
   const handleRegister = async (e:React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,10 +55,11 @@ const RegisterForm = ({onClick}:RegisterFormProps) => {
 
             if(!response.ok) {
                 const errorData = await response.json().catch(() => null);
-                throw new Error(errorData?.message || "Something went wrong, try again later!");
+                throw new Error(errorData?.message || "Unsuccessful registration, try again later!");
             }
 
-            //const data = await response.json();
+            const data = await response.json();
+            login(data);
 
             showFeedback("success", "Account created successfully!", 1000);
             setTimeout(() => navigate('/home'), 1000);
@@ -76,11 +71,7 @@ const RegisterForm = ({onClick}:RegisterFormProps) => {
   };
 
   return (
-    <div>
-        {usePopUp && (
-            <Feedback type={feedbackType} msg={feedbackMsg} />
-        )}
-        
+    <div>        
         <form className="flex flex-col items-center w-[70dvw] md:w-[40dvw] xl:w-[30dvw] AuthForm" onSubmit={handleRegister}>
             <div className="flex flex-col items-center">
                 <img className="w-[150px] h-[100%] mb-[-0.5rem]" src="src/assets/sai_rpg_logo.webp" alt="SAI RPG App Logo" />

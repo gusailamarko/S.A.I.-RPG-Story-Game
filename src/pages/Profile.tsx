@@ -5,7 +5,7 @@ import ProfileInfo from "../components/ProfileInfo"
 
 const Profile = () => {
   return (
-    <main className="flex flex-col md:flex-row items-center pb-[110px] md:pb-0">
+    <main className="flex flex-col md:flex-row items-center min-h-[100dvh] pb-[110px] md:pb-0">
       <div className="flex flex-col items-center w-full md:hidden">
         <MobileTopBar />
         <MobileNav />

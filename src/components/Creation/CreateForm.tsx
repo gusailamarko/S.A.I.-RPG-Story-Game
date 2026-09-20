@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import Button from "../Button";
+import { useFeedback } from "../../context/Feedback";
 
 interface Genres {
     genreid: number,
     genrename: string
-}
+};
 
 const CreateForm = () => {
+  const {showFeedback} = useFeedback();
+
   const [genres, setGenres] = useState<Genres[]>([]);
   const [loading, isLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +54,7 @@ const CreateForm = () => {
   const handleRemoveFile = () => {
     setTitleImage(null);
     if(fileInputRef.current) fileInputRef.current.value = "";
-  }
+  };
 
   const handleFormPageChange = () => {
     const formData = new FormData(document.querySelector("form") as HTMLFormElement);
@@ -60,12 +63,13 @@ const CreateForm = () => {
     const storyDesc = formData.get("storyDesc") as string;
 
     if(!titleImage || !storyName || !genre || !storyDesc) {
-        //showFeedback()
-        return console.log("Please fill in all required fields!");
+        showFeedback("error", "Please fill in all required fields!");
     }
-
-    setStep(2);
-  }
+    else
+    {
+        setStep(2);
+    }
+  };
 
   const handleCreateStory = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,8 +84,7 @@ const CreateForm = () => {
     const storyGoal = formData.get("storyGoal") as string;
 
     if(!storyIntro || !storyGoal) {
-        //showFeedback()
-        return console.log("Please fill in all required fields!");
+        showFeedback("error", "Please fill in all required fields!");
     }
 
     if(titleImage) {
@@ -109,20 +112,21 @@ const CreateForm = () => {
         else
         {
             const requestData = await request.json();
-            //showFeedback
+            showFeedback("success", "Story successfully created!", 1000);
             //page reload via useNavigate() -> const navigate = useNavigate() -> navigate('/create')
         }
     }
     catch(error) {
         setError("Something went wrong, try again later!");
+        showFeedback("error", "Something went wrong, try again later!");
     }
     finally {
         isLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="flex justify-center w-[90dvw] md:h-[100dvh] overflow-y-auto md:p-[2rem]">
+    <div className="flex justify-center w-[90dvw] md:h-[100dvh] overflow-y-auto py-[2rem] md:p-[2rem]">
         <form onSubmit={handleCreateStory} className="flex flex-col items-center justify-center gap-[1.5rem] w-full md:w-[80%] h-full">
             <div className="flex flex-col items-center w-full md:w-[80%]">
                 <h2 className="text-[1.5rem] tracking-[5%]">CREATE A STORY</h2>
@@ -137,11 +141,11 @@ const CreateForm = () => {
                     <input type="file" name="titleImg" id="titleImg" className="hidden" accept="image/*" onChange={handleFileChange} ref={fileInputRef} />
                     <div className="flex justify-center items-center">
                         {!titleImage ? (
-                            <span className="py-[0.5rem] px-[1rem] UploadFileBtn" onClick={() => fileInputRef.current?.click()}>+ Choose an image</span>
+                            <span className="py-[0.5rem] px-[1rem] hover:cursor-pointer UploadFileBtn" onClick={() => fileInputRef.current?.click()}>+ Choose an image</span>
                         ) : (
                             <div className="flex justify-start items-center gap-[0.5rem]">
                                 <span>{titleImage.name}</span>
-                                <span className="RemoveFileBtn" onClick={handleRemoveFile}>
+                                <span className="hover:cursor-pointer RemoveFileBtn" onClick={handleRemoveFile}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
                                     </svg>

@@ -1,7 +1,7 @@
 interface StoryProps {
     storyID: number,
-    genreID: number,
-    author: string,
+    genreID?: number,
+    author?: string,
     storyName: string,
     titleImg: string,
 };

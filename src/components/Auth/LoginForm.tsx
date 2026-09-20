@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Button from "../Button"
 import { useNavigate } from "react-router-dom";
-import Feedback from "../Feedback";
+import { useAuth } from "../../context/AuthContext";
+import { useFeedback } from "../../context/Feedback";
 
 interface LoginFormProps {
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -9,18 +10,11 @@ interface LoginFormProps {
 
 const LoginForm = ({onClick}:LoginFormProps) => {
   const navigate = useNavigate();
+  const {login} = useAuth();
+  const {showFeedback} = useFeedback();
+  
   const [passwordVisibility, setPasswordVisibility] = useState(false);
-  const [feedbackType, setFeedbackType] = useState<"success" | "error">("error");
-  const [feedbackMsg, setFeedbackMsg] = useState("");
-  const [usePopUp, setUsePopUp] = useState(false);
   const [forgottenPwWindow, setForgottenPwWindow] = useState(false);
-
-  const showFeedback = (type: "success" | "error", msg: string, duration = 3000) => {
-    setFeedbackType(type);
-    setFeedbackMsg(msg);
-    setUsePopUp(true);
-    setTimeout(() => setUsePopUp(false), duration);
-  }
 
   const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,10 +43,11 @@ const LoginForm = ({onClick}:LoginFormProps) => {
 
             if(!response.ok) {
                 const errorData = await response.json().catch(() => null);
-                throw new Error(errorData?.message || "Something went wrong, try again later!");
+                throw new Error(errorData?.message || "Unsuccessful login, try again later!");
             }
 
-            //const data = await response.json(); upload into user state (useAuth)
+            const data = await response.json();
+            login(data);
 
             showFeedback("success", "Logged in successfully!", 1000);
             setTimeout(() => navigate('/home'), 1000);
@@ -68,10 +63,6 @@ const LoginForm = ({onClick}:LoginFormProps) => {
 
   return (
     <div>
-        {usePopUp && (
-            <Feedback type={feedbackType} msg={feedbackMsg} />
-        )}
-
         {forgottenPwWindow && (
             <div className="w-[80dvw] md:w-[50dvw] xl:w-[40dvw] ResetLinkModal AuthForm">
                 <form className="flex flex-col items-center gap-[1rem]">
