@@ -64,4 +64,4 @@ export async function getOwnStories(userid) {
     );
 
     return result.rows;
-}
+};

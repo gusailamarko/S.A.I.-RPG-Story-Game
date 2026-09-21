@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Button from "./Button"
-import Story from "./Home/Story"
+import Story from "./Story"
+import { useNavigate } from "react-router-dom"
 
 interface User {
     userid: number,
@@ -23,6 +24,8 @@ const ProfileInfo = () => {
   const [userStories, setUserStories] = useState<UserStories[] | null>(null);
   const [loading, isLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getLoggedInUserData = async () => {
@@ -71,6 +74,8 @@ const ProfileInfo = () => {
     getUserStories();
   }, [])
 
+  const sendToCreate = () => navigate('/create')
+
   return (
     <div className="flex flex-col flex-1 items-center md:h-[100dvh] overflow-y-auto md:overflow-x-hidden">
         <div className="ProfileBanner">
@@ -103,14 +108,14 @@ const ProfileInfo = () => {
             <div className="text-left w-full md:text-center">
                 <h2 className="text-[20px]">My Stories</h2>
             </div>
-            {userStories == null && (
+            {userStories?.length == 0 && (
                 <div className="flex flex-col flex-1 items-center justify-center gap-[0.5rem] w-full">
                     <p className="text-[18px]">No stories yet</p>
-                    <Button type="button" usage="MainActionBtn" label="+ CREATE STORY" />
+                    <Button type="button" usage="MainActionBtn" label="+ CREATE STORY" onClick={sendToCreate} />
                 </div>
             )}
             {userStories !== null && (
-                <div className="flex justify-start items-center gap-[1rem] max-w-[90dvw] overflow-x-auto md:grid grid-cols-3 xl:grid-cols-5">
+                <div className="flex justify-start items-center gap-[1rem] max-w-[90dvw] overflow-x-auto md:grid grid-cols-3 xl:grid-cols-4">
                     {userStories.map((story) => (
                         <Story storyID={story.storyid} storyName={story.storyname} titleImg={story.titleimg}/>
                     ))}

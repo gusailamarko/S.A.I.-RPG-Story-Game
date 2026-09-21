@@ -45,6 +45,19 @@ export async function register(req, res, next) {
     }
 };
 
+export async function logout(req, res, next) {
+    try {
+        req.session.destroy((err) => {
+            if(err) return next(new CustomError("Couldn't log out, try again!", 500));
+            res.clearCookie('connect.sid');
+            res.status(200).json({message: "Logged out successfully!"});
+        })
+    }
+    catch (e) {
+        next(e);
+    }
+}
+
 export async function getMe(req, res, next) {
     try {
         const loggedInUserData = await getLoggedInUserData(req.session.user.userid);

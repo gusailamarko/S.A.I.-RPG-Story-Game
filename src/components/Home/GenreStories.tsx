@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Story from "./Story";
+import Story from "../Story";
 
 interface GenreStoriesProps {
     id: number;
@@ -67,7 +67,7 @@ const GenreStories = ({id, genreName}:GenreStoriesProps) => {
             <h2 className="text-[1.2rem] tracking-[10%] uppercase">{genreName}</h2>
             <span className="flex-1 h-[1px] bg-slate-300"></span>
         </div>
-        <div className="flex justify-start items-center overflow-x-auto gap-[1rem] md:grid md:grid-cols-3 xl:grid-cols-4 md:overflow-x-hidden">
+        <div className="flex justify-start items-center gap-[1rem] overflow-x-auto md:overflow-x-hidden md:grid grid-cols-3 xl:grid-cols-4">
             {visibleStories.map((story) => (
                 <Story key={story.storyid} storyID={story.storyid} genreID={story.genreid} storyName={story.storyname} titleImg={story.titleimg} author={story.author}/>              
             ))}
